@@ -1,0 +1,10 @@
+insert into bd_brp.USER (UUID, username, email, password) values ('5T87DE8FH72', 'cpellett0', 'rusmar0@si.edu', '$2a$04$zfmXNCedFdHQ1Yhzvh.qReiv1xxIrtLK9xkhcySq8KBBLa.I7Utge');
+insert into bd_brp.USER (UUID, username, email, password) values ('7D10W82RK93', 'tmccudden1', 'wstansbury1@fotki.com', '$2a$04$W/ULabGGeZeN.0Q3PuWAXeQalykcsCCAPP0IRgi9c0MZHdo0iPaze');
+insert into bd_brp.USER (UUID, username, email, password) values ('9KK1R60RX90', 'fmacmaster2', 'lmacnish2@eepurl.com', '$2a$04$9xGjhwNOjh13IR/elfrH0OqKhka6myRlG/F6mT41rW1uO4lVytlcC');
+insert into bd_brp.USER (UUID, username, email, password) values ('5TN6R05VN44', 'ahurdis3', 'cpaula3@kickstarter.com', '$2a$04$7SyjwlpX5BN/7merRQHjBuwapQTJqw2uGfp.GT9R9b0lIOf9uz2IK');
+insert into bd_brp.USER (UUID, username, email, password) values ('7VQ3H77WE20', 'agrieger4', 'jcuzen4@amazon.de', '$2a$04$xHpnRBsTKucDxhKEQ8vbH.IztbzduUdt2tz1XhFp2E.EwpiWGoK/a');
+insert into bd_brp.USER (UUID, username, email, password) values ('8Q36F85MJ82', 'mllewellyn5', 'vcuppitt5@miitbeian.gov.cn', '$2a$04$NUwIyax.ndsKqE8xFqhrd.4JRv5uE8GmP6mljZkqcM1M91F8r6QB6');
+insert into bd_brp.USER (UUID, username, email, password) values ('7GT3RY4YH38', 'mdumberell6', 'treynault6@scientificamerican.com', '$2a$04$EOtO8ngR/ROl76z7ppy98eDjflhy6okqq2.fU40onBN/eEXBkho7m');
+insert into bd_brp.USER (UUID, username, email, password) values ('2MF8GY9UC12', 'gmiddleditch7', 'pfermoy7@over-blog.com', '$2a$04$2wiOjKm6fVFVp7y0vAT7AO7EET3QHM0uHqgoOv1daJMHy5TaMl74i');
+insert into bd_brp.USER (UUID, username, email, password) values ('2UF7HW6WD75', 'agough8', 'shuggons8@auda.org.au', '$2a$04$qwfgfjebzA81Ya.eGCR7Y.aWHaygzMMkWV2C7tMTwv6LUL.xfMafa');
+insert into bd_brp.USER (UUID, username, email, password) values ('1N70RV4XV17', 'pdicks9', 'syouens9@gmpg.org', '$2a$04$Yjk79FmNdwPwnHcOM0yE6.mRAie.G4QjZyiP0DyqTyDVWp8sHUJGW');

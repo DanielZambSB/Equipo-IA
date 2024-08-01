@@ -1,0 +1,10 @@
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('1A54FH1TJ11', 'Rebbecca Ramiro', 'PA', '1797706284', 'Ailane', '15e3119b-45b5-4ed5-8bed-d63f0a50df96', 1);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('6VC0Y30VP59', 'Roseann Cartmer', 'CC', '4940157040', 'Rhybox', 'f98e4624-a7e4-4882-a1ff-07ff0dcf9ad2', 2);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('8EN4A90GD69', 'Cyndia Gounel', 'CC', '7201813250', 'Photospace', 'a5ff4d22-8d6c-4063-93ff-4208aa4e5e30', 3);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('2WJ6J95AC50', 'Renard Richie', 'CC', '5368102763', 'Yambee', '827deaef-957a-4b15-9a49-033708b943ab', 4);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('9FE4K46RF24', 'Melosa Endersby', 'CE', '3967636283', 'Feedbug', '68258886-df7b-447e-9243-99d9043aa5b9', 5);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('3K57EK6GM07', 'Leone Josefsohn', 'NIT', '0520202244', 'Devpoint', 'a941ce9c-77a8-4940-a2bc-8be6993c2b54', 6);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('3X48CR7EV36', 'Jessalin Kleinlerer', 'NIT', '7531948265', 'Aimbu', '196121af-9c50-4eb2-9097-cd57873a504d', 7);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('3JF2FE1GV87', 'Nonnah Currum', 'CC', '5866199289', 'Feedspan', '8b761dba-5c1a-45c8-808c-a5c4fda1607a', 8);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('7EU0YM9PU18', 'Karin Alabastar', 'CE', '1788937945', 'Eare', '7509cd23-766f-489f-a961-91fac248fb4c', 9);
+insert into CLIENT (UUID, name, tipo_doc, doc_num, company, folder_id, USERS_id) values ('4JY6M75HK39', 'Abdel Berger', 'CC', '1065454252', 'Dabtype', '273a4476-d3df-4a04-a12a-aa103074fd55', 10);
