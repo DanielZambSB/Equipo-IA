@@ -1,0 +1,207 @@
+/**
+ * ||=====================================================||
+ * ||                    CRUD WRAPPERS                    ||
+ * ||=====================================================||
+ */
+
+const pqrsTableName = "PQRS";
+const pqrsHistoryTableName = "DELETED_PQRS"
+const pqrsKeyOrder = [
+  'client_uuid',        'applicant_type',
+  'type',               'classT',
+  'ot_number',          'facts',
+  'document_type',      'document_number',
+  'social_reason',      'name',
+  'last_name',          'email',
+  'phone',              'email_comm',
+  'wpp_comm',           'department',
+  'city',               'address',
+  'additional',         'provider',
+  'evidence_files_ids'
+]
+
+function createPqrs(newPqrs){
+  return parametricCreate(pqrsTableName, newPqrs, pqrsKeyOrder);
+}
+
+
+
+
+/**
+ * ||=====================================================||
+ * ||                     CRUD METHODS                    ||
+ * ||=====================================================||
+ */
+
+const MAIN_DB = SpreadsheetApp.openById("1Bq5_v3BeX3aIVwq-lbPMGE7HxuVSpx5LqoJ8ygUMkmI");
+
+
+function parametricDeleteTableContents(dbName) {
+  const pDb = MAIN_DB.getSheetByName(dbName);
+  Logger.log("last row" + pDb.getLastRow());
+  pDb.deleteRows(2, pDb.getLastRow());
+  return ["No Content", 204];
+}
+
+
+function parametricCreate(tableName, data, tableKeyOrder, addUpdatePolicy) {
+  const table = MAIN_DB.getSheetByName(tableName);
+  if ("id" in data) {
+    Logger.log("data has id: " + data.id);
+    return parametricUpdate(tableName, data.id, data, tableKeyOrder);
+  }
+  if (addUpdatePolicy && addUpdatePolicy.key in data) {
+    Logger.log(
+      "data has matched on the additional update policy:  " +
+        data[addUpdatePolicy.key]
+    );
+    return parametricUpdate(
+      tableName,
+      data.id,
+      data,
+      tableKeyOrder,
+      addUpdatePolicy
+    );
+  }
+  let idRange = "A:A";
+  let id = table.getLastRow();
+  let requestDate = new Date();
+  // console.log(requestDate);
+  let valuesData = [];
+  valuesData = tableKeyOrder.map((key) => {
+    return key in data ? data[key] : "";
+  });
+  // Logger.log(valuesData);
+  if (id <= table.getRange(idRange).getValues()[table.getLastRow() - 1]) {
+    id =
+      parseInt(table.getRange(idRange).getValues()[table.getLastRow() - 1]) + 1;
+  }
+  let row = [id, requestDate, ...valuesData];
+  table.appendRow(row);
+  data.id = id;
+  return [200, id];
+}
+
+function parametricRead(tableName, id) {
+  const table = MAIN_DB.getSheetByName(tableName);
+  let idRange = "A:A";
+  let rowsMatching = table
+    .getRange(idRange)
+    .createTextFinder(id.toString())
+    .matchEntireCell(true)
+    .findAll();
+  Logger.log(rowsMatching);
+  if (rowsMatching.length == 0) {
+    // console.log("ID not found in the sheet");
+    return [401, "ID not found in the sheet"];
+  }
+  let rowid = rowsMatching[0].getRow();
+  let cell = table.getRange(rowid, 1, 1, table.getLastColumn()).getValues()[0];
+  Logger.log(cell);
+
+  return [200, cell];
+}
+
+function parametricReadTable(tableName) {
+  const table = MAIN_DB.getSheetByName(tableName);
+  let wholeTable = table
+    .getRange(2, 1, table.getLastRow() - 1, table.getLastColumn())
+    .getDisplayValues();
+  // Logger.log(wholeTable)
+  return wholeTable;
+}
+
+
+function parametricUpdate(
+  tableName,
+  id,
+  newData,
+  tableKeyOrder,
+  addUpdatePolicy
+) {
+  const table = MAIN_DB.getSheetByName(tableName);
+  let newDataArr = tableKeyOrder.map((key) => {
+    return key in newData ? newData[key] : "";
+  });
+  if (addUpdatePolicy) {
+    Logger.log(addUpdatePolicy);
+    let requestDate = new Date();
+    let column = tableKeyOrder.indexOf(addUpdatePolicy.key);
+    let offset = 3;
+    if (column != -1) {
+      column += offset; // match the starting index of google sheets [1,N], and accounting for id and date columns
+    }
+    let range = table.getRange(1, column, table.getLastColumn());
+    let rowsMatching = range
+      .createTextFinder(addUpdatePolicy.searchVal.toString())
+      .matchEntireCell(true)
+      .findAll();
+    Logger.log(rowsMatching);
+    if (rowsMatching.length == 0) {
+      // console.log(`${addUpdatePolicy.key} not found in the sheet`);
+      return [401, `${addUpdatePolicy.key} not found in the sheet`];
+    }
+    let rowid = rowsMatching[0].getRow();
+    let idfound = table.getRange(rowid, 1).getValues()[0]; // aqui me quede ayer
+    let updatedData = [idfound, requestDate, ...newDataArr];
+    table.getRange(rowid, 1, 1, updatedData.length).setValues([updatedData]);
+    Logger.log(updatedData);
+    return [200, updatedData];
+  } else {
+    Logger.log(id);
+    let idRange = "A:A";
+    let requestDate = new Date();
+    let rowsMatching = table
+      .getRange(idRange)
+      .createTextFinder(id.toString())
+      .matchEntireCell(true)
+      .findAll();
+    Logger.log(rowsMatching);
+    if (rowsMatching.length == 0) {
+      // console.log("ID not found in the sheet");
+      return [401, "ID not found in hte sheet"];
+    }
+    let rowid = rowsMatching[0].getRow();
+    let updatedData = [id, requestDate, ...newDataArr];
+    table.getRange(rowid, 1, 1, updatedData.length).setValues([updatedData]);
+    Logger.log(updatedData);
+    return [200, updatedData];
+  }
+}
+
+function parametricDelete(tableName, historyTableName, id) {
+  const table = MAIN_DB.getSheetByName(tableName);
+  const historyTable = MAIN_DB.getSheetByName(historyTableName);
+  let idRange = "A:A";
+  let deletedId = historyTable.getLastRow();
+  let deletedDate = new Date();
+
+  let rowsMatching = table
+    .getRange(idRange)
+    .createTextFinder(id.toString())
+    .matchEntireCell(true)
+    .findAll();
+  if (rowsMatching.length == 0) {
+    // console.log("ID not found in the sheet");
+    return [404, "ID not found in the sheet"];
+  }
+  if (
+    deletedId <=
+    historyTable.getRange(idRange).getValues()[historyTable.getLastRow() - 1]
+  ) {
+    deletedId = parseInt(
+      table.getRange(idRange).getValues()[historyTable.getLastRow() - 1] + 1
+    );
+  }
+
+  let rowid = rowsMatching[0].getRow();
+  let deletedRecord = table
+    .getRange(rowid, 1, 1, table.getLastColumn())
+    .getDisplayValues()[0];
+  Logger.log(deletedRecord);
+  deletedRecord = deletedRecord.slice(2); // Every table should begin with id and date otherwise this wont work
+  table.deleteRow(rowid);
+  historyTable.appendRow([deletedId, deletedDate, ...deletedRecord]);
+  return [204];
+}
+
